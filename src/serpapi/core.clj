@@ -10,6 +10,17 @@
   (reset! api-key new-api-key))
 
 
+(defn search-request [params]
+  (try
+    (some->
+     (http/request {:method :get
+                    :url "https://serpapi.com/search"
+                    :socket-timeout 600 :connection-timeout 600
+                    :query-params params})
+     :body)
+    (catch Exception _)))
+
+
 (defn search [params]
   (let [{:strs [api_key] :as transformed-params} (transform-params params)
         transformed-params (if api_key
@@ -17,14 +28,7 @@
                              (assoc transformed-params "api_key" @api-key))]
     (if-let [param-errors (validate-params transformed-params)]
       (throw (ex-info "Invalid Search Params" param-errors))
-      (try
-        (->
-         (http/request {:method :get
-                        :url "https://serpapi.com/search"
-                        :socket-timeout 600 :connection-timeout 600
-                        :query-params transformed-params})
-         :body)
-        (catch Exception _)))))
+      (search-request transformed-params))))
 
 
 (defn html-search [params]
@@ -48,5 +52,7 @@
   
   (html-search {:q "Igboho Secession"})
   (edn-search {:q "Igboho Secession"})
+  (json-search {:q "Igboho Secession"})
+
   
   "")

@@ -6,4 +6,7 @@
         metosin/malli {:mvn/version "0.5.1"}
         borkdude/sci {:mvn/version "0.2.5"}
         cheshire/cheshire {:mvn/version "5.10.0"}
-        clj-http/clj-http {:mvn/version "3.12.2"}}}
+        clj-http/clj-http {:mvn/version "3.12.2"}}
+ :aliases {:test {:extra-paths ["test"]
+                  :extra-deps {lambdaisland/kaocha {:mvn/version "1.0.861"}
+                               clj-http-fake/clj-http-fake {:mvn/version "1.0.3"}}}}}
