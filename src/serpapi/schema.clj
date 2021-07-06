@@ -3,12 +3,23 @@
             [malli.transform :as mt]
             [malli.error :as me]))
 
+
+(def ApiKey ["api_key" [:string {:min 1}]])
+
+(def Output ["output" {:optional true} [:enum {:default "json"} "json" "html"]])
+
 (def SearchParams 
   [:map
    ["engine"  [:enum {:default "google"} "google" "baidu" "bing" "yahoo" "yandex" "ebay"]]
-   ["api_key" [:string {:min 1}]]
-   ["output" {:optional true} [:enum {:default "json"} "json" "html"]]
+   ApiKey
+   Output
    ["q" [:string {:min 1}]]])
+
+(def SearchArchiveParams
+  [:map ApiKey Output])
+
+(def AccountParams
+  [:map ApiKey])
 
 
 (def param-transformer (mt/transformer
@@ -17,14 +28,14 @@
                          :encoders {:enum m/-keyword->string}}
                         mt/default-value-transformer))
 
-(defn transform-params [params]
+(defn transform-params [schema params]
   (as-> params $
-    (m/encode SearchParams $ (mt/key-transformer {:encode name}))
-    (m/encode SearchParams $ param-transformer)))
+    (m/encode schema $ (mt/key-transformer {:encode name}))
+    (m/encode schema $ param-transformer)))
 
-(defn validate-params [params]
+(defn validate-params [schema params]
   (some->> params
-           (m/explain SearchParams)
+           (m/explain schema)
            (me/humanize)))
 
 
