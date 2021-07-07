@@ -21,7 +21,7 @@ Clojure must be already installed:
 
 ```clojure
 (require '[serpapi.core :as sc])
-(def edn-results (sc/edn-search {:q "coffee", :api_key: "secret_api_key"})
+(def edn-results (sc/edn-search {:q "coffee", :api_key "secret_api_key"})
  ```
 
 This example runs a search about "coffee" using your secret api key.
@@ -38,8 +38,21 @@ Et voila..
 
 Alternatively, you can search on other search engines by providing the `:engine` keyword to argument map on any of the provided functions.
 The following values are supported
+
+```
 :bing :baidu :yahoo :yandex :ebay
-The string equivalents for the keywords above are also supported
+```
+All functions support both strings and keywords for map keys as well as any keyword sets mentioned in this document
+
+For example the usage below is also supported
+
+
+```clojure
+(require '[serpapi.core :as sc])
+(def edn-results (sc/edn-search {"q" "coffee", "api_key" "secret_api_key" "engine" "baidu"})
+ ```
+
+
 
 See the [playground to generate your code.](https://serpapi.com/playground)
 
@@ -67,7 +80,7 @@ The api_key can be set globally using the set-api-key function.
 
 or api_key can be provided for each search.
 ```clojure
-(def edn-results (sc/edn-search {:q "coffee", :api_key: "secret_api_key"})
+(def edn-results (sc/edn-search {:q "coffee", :api_key "secret_api_key"})
 ```
 
 To get the key simply copy/paste from [serpapi.com/dashboard](https://serpapi.com/dashboard).
@@ -146,7 +159,7 @@ it prints the first 3 location matching Austin (Texas, Texas, Rochester)
 This API allows to retrieve previous search.
 To do so run a search to save a search_id.
 ```clojure
-(def search (sc/edn-search {:q "Coffee", :location: "Portland"}))
+(def search (sc/edn-search {:q "Coffee", :location "Portland"}))
 (def search-id (get-in search [:search_metadata :id]))
 ```
 
