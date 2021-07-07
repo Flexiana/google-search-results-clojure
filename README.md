@@ -153,7 +153,6 @@ To do so run a search to save a search_id.
 Now let retrieve the previous search from the archive.
 
 ```clojure
-search = GoogleSearch.new
 (def archive-search (sc/search-archive search-id))
 ```
 it prints the search from the archive.
