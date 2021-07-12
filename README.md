@@ -14,8 +14,9 @@ SerpApi.com provides a [script builder](https://serpapi.com/demo) to get you sta
 
 ## Installation
 
-Clojure must be already installed:
+Clojure must be already installed.
 
+Follow [these instructions](https://clojure.org/guides/getting_started) to set up Clojure 
 
 ## Quick start
 
@@ -36,13 +37,13 @@ The function sc/edn-search
  - Parse JSON into EDN using the Cheshire library
 Et voila..
 
-Alternatively, you can search on other search engines by providing the `:engine` keyword to argument map on any of the provided functions.
-The following values are supported
+Alternatively, you can search on other search engines by including the `:engine` keyword and appropriate value in the to  map provided as argument to `edn-search`or any other search function.
+The following values are supported:
 
 ```
 :bing :baidu :yahoo :yandex :ebay
 ```
-All functions support both strings and keywords for map keys as well as any keyword sets mentioned in this document
+All functions support both strings and keywords for map keys as well as any keyword sets mentioned in this document.
 
 For example the usage below is also supported
 
@@ -117,16 +118,18 @@ To get the key simply copy/paste from [serpapi.com/dashboard](https://serpapi.co
 (def base-search (sc/search (assoc search-params :output "json")))
 ```
 
-(the full documentation)[https://serpapi.com/search-api].
 
-More search API are documented on [SerpApi.com](http://serpapi.com).
+[Full Documentation](https://serpapi.com/search-api)
+
+More search APIs are documented on [SerpApi.com](http://serpapi.com).
 
 You will find more hands on examples below.
 
 ### Example by specification
-We love true open source, continuous integration and Test Drive Development (TDD). 0
+
+We love true open source, continuous integration and Test Drive Development (TDD). 
  
-The directory test/ includes specification/examples.
+The directory `test/` includes specification/examples.
 
 
 To run the test:
@@ -163,15 +166,17 @@ To do so run a search to save a search_id.
 (def search-id (get-in search [:search_metadata :id]))
 ```
 
-Now let retrieve the previous search from the archive.
+Now let's retrieve the previous search from the archive.
 
 ```clojure
 (def archive-search (sc/search-archive search-id))
+(println archive-search)
 ```
 it prints the search from the archive.
 
 ### Account API
 ```clojure
 (def account-search (account))
+(println account-search)
 ```
 it prints your account information.
